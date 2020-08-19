@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,mininmum-scale=1,maximum-scale=1,user-scalable=no" charset='UTF-8' />
+    <style>
+        button{
+            border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border: 1px gray solid;
+        }
+        input, textarea{
+            box-shadow: none;
+            -webkit-appearance: none;
+            border: 1px gray solid;
+        }
+        table{
+            border-collapse: collapse;
+            text-align: center;
+        }
+        table td, table th
+        {
+            border: 1px solid gray;
+            height: 30px;
+        }
+    </style>
+</head>
+<body onload="init()" style="text-align: center; font-family: Arial, PingFang, Helvetica, sans-serif;">
+
+
+    <h1 style="font-size: 22px;">欢迎使用<del style="color:gray; font-size: smaller;">非常简陋的</del>背单词助手!</h1>
+    <hr/>
+
+    <div id="chooseDictContainer" style="width: 95%; border-radius: 10px; border: 1px grey solid; line-height: 30px; font-size: 16px; text-align: left; padding: 10px 0 10px 5% ;">
+        <p style="margin-top: 0; margin-bottom: 0;">
+            切换词单：第
+            <input id="currentDict" value="1" onclick="this.select()" onkeydown="if(event.keyCode==13){changeDict()}" style="display: inline; width: 42px; font-size: 14px; text-align: center;">
+            课
+            <button onclick="document.getElementById('currentDict').value='自定义'; document.getElementById('userDict').style.display='';" style="display: inline; margin: 0 5px 0 5px; font-size: 14px;">自定义</button>
+<textarea id="userDict" onclick="if(this.value[0]=='在'){this.focus();this.select()}" style="display: none; height: 60px; margin: 5px 0 0 0; width: 90%;">
+在这里粘贴词单
+每个单词一行，每行格式如：
+“汉语|仮名”或“汉语|仮名|漢字”</textarea>
+            <button onclick="changeDict()" style="display: inline; font-size: 14px;">确定</button>
+        </p>
+    </div>
+    <div id="mainContainer" style="height: 180px; width: 95%; border-radius: 10px; border: 1px grey solid; text-align: left; padding-left: 5%; margin-top: 10px;">
+        <button id="markOrUnmark" onclick="markOrUnmark()" style="float: right; margin: 20px 20px 0 0; height: 30px">收藏</button>
+        <p id="problem" style="font-size: 24px; margin-top: 20px; margin-bottom: 20px;">Loading...</p>
+        
+        <div id="inputContainer" style="width: 100%; height: 30px; margin-top: 0;">
+            <input id="answer" type="text" onkeydown="if(event.keyCode==13){checkAnswer()}" style="float: left; font-size: 24px; height: 30px; width: 240px;">
+            <div id="judge" style="float: left; margin-left: 10px; width: 30px; height: 30px; font-size: 28px;">🤔</div>
+        </div>
+        <div id="buttonContainer" style="width: 100%; height: 40px; margin-top: 20px; padding: 0;">
+            <button id="showHideHint" onclick="showHideHint()" style="float: left; width: 24%; height: 100%; margin: 0 1% 0 0; font-size: 16px;">提示</button>
+            <button id="prev" onclick="prevProblem()" style="float: left; width: 10%; height: 100%; margin: 0 1% 0 0;">&lt;&lt;</button>
+            <input id="currentPage" onkeydown="if(event.keyCode==13){jumpProblem()}" value="0" style="float: left; width: 7%; height: 85%; margin: 0 1% 0 0; text-align: right; font-size: 14px;">
+            <div id="totalPages" style="float: left; height:100%; width: 10%; margin: 0 1% 0 0; font-size: 14px; line-height: 40px;">/100</div>
+            <button id="next" onclick="nextProblem()" style="float: left; width: 10%; height: 100%; margin: 0 1% 0 0;">&gt;&gt;</button>
+            <button id="submit" onclick="checkAnswer()" style="float: left; width: 24%; height: 100%; margin: 0; font-size: 16px;">提交</button>
+        </div>
+        <div id="trueAnswerContainer" style="display: none; width: 100%; height: 60px; margin-top: 20px;">
+            <hr style="width: 95%; margin: 0 0 10px 0;"/>
+            <p id="trueProblem" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px;">Problem</p>
+            <p id="trueAnswer" style="font-size: 20px; margin-top: 10px; margin-bottom: 0px;">Answer</p>
+        </div>
+    </div>
+
+    <div id="markContainer" style="width: 95%; border-radius: 10px; border: 1px grey solid; text-align: left; padding-left: 5%; margin-top: 10px;">
+        <p style="font-size: 20px; margin: 20px 0 20px 0;">
+            收藏列表
+            <button onclick="practiceMarkList()" style="display:inline; font-size: 18px;">练习</button>
+            <button onclick="exportMarkList()" style="display:inline; font-size: 18px;">导出</button>
+        </p>
+        
+        <table id="markList" style="margin-bottom: 20px;">
+            <tr style="background-color: #efefef;">
+              <td width="180">单词</td>
+              <td width="80">含义</td>
+              <td width="0"><button onclick="unmarkAll()" style="height: 28px;">清除</button></td>
+            </tr>
+        </table>
+
+        <textarea id="exportedMarkList" readonly="readonly" onclick="this.focus(); this.select()" style="width: 90%; height:100px; font-size: 16px; margin-bottom: 20px;" ></textarea>
+    </div>
+
+
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
