@@ -10,7 +10,7 @@ hintVisible = false;
 changeDict = function(){
     dictName = document.getElementById("currentDict").value;
     if(!isNaN(parseInt(dictName))){
-        dictionaryPath = "dict/Lesson" + dictName + ".txt";
+        dictionaryPath = "dict/XSJ" + dictName + ".txt";
         getServerDict(dictionaryPath);
     }
     else{
